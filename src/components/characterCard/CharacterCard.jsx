@@ -1,19 +1,33 @@
+import { InfoBlock, InfoContainer, InfoImg, InfoLegendBlock, InfoLegendDesc, InfoLegendName, InfoName, InfoTitle } from "./CharacterCard.styled";
+
 export const CharacterCard = ({character}) => {
     return (
-      <div>
-        <img src={character.image} alt="foto of character" />
-        <h2>{character.name}</h2>
-        <h3>Information</h3>
-        <h4>Gender</h4>
-        <p>{character.gender}</p>
-        <h4>Status</h4>
-        <p>{character.status}</p>
-        <h4>Specie</h4>
-        <p>{character.species}</p>
-        <h4>Origin</h4>
-        <p>{character.origin.name}</p>
-        <h4>Type</h4>
-        <p>{!character.type ? `Unknown` : character.type}</p>
-      </div>
+      <InfoContainer>
+        <InfoImg src={character.image} alt="foto of character" />
+        <InfoName>{character.name}</InfoName>
+        <InfoBlock>
+          <InfoTitle>Informations</InfoTitle>
+          <InfoLegendBlock>
+          <InfoLegendName>Gender</InfoLegendName>
+          <InfoLegendDesc>{character.gender}</InfoLegendDesc>
+          </InfoLegendBlock>
+          <InfoLegendBlock>
+          <InfoLegendName>Status</InfoLegendName>
+          <InfoLegendDesc>{character.status}</InfoLegendDesc>
+          </InfoLegendBlock>
+          <InfoLegendBlock>
+          <InfoLegendName>Specie</InfoLegendName>
+          <InfoLegendDesc>{character.species}</InfoLegendDesc>
+          </InfoLegendBlock>
+          <InfoLegendBlock>
+          <InfoLegendName>Origin</InfoLegendName>
+          <InfoLegendDesc>{character.origin.name}</InfoLegendDesc>
+          </InfoLegendBlock>
+          <InfoLegendBlock>
+          <InfoLegendName>Type</InfoLegendName>
+          <InfoLegendDesc>{!character.type ? `Unknown` : character.type}</InfoLegendDesc>
+          </InfoLegendBlock>
+        </InfoBlock>
+      </InfoContainer>
     );
 }

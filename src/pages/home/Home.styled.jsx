@@ -5,8 +5,11 @@ import logoDesk from 'images/PngItem_desktop.png'
 import filterIcon from 'images/filter.svg'
 
 export const HomeContainer = styled.div`
-    padding: 0 24px;
-`
+  max-width: 1020px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+`;
 export const Logo = styled.div`
   width: 312px;
   height: 104px;
@@ -41,6 +44,23 @@ export const FilterInput = styled.input`
   background-position: 16px;
 `;
 
+export const ListContainer = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (min-width: 1020px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media screen and (min-width: 1440px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`;
+
 export const StyledLink = styled(Link)`
 text-decoration: none;
 `;
@@ -52,12 +72,22 @@ export const ItemCard = styled.div`
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
+
+  @media screen and (min-width: 1440px) {
+    width: 240px;
+    height: 244px;
+  }
 `;
 
 export const ItemImgContainer = styled.div`
   position: relative;
   height: 232px;
   width: 312px;
+
+  @media screen and (min-width: 1440px) {
+    width: 240px;
+    height: 168px;
+  }
 `;
 
 export const ItemImg = styled.img`
@@ -73,7 +103,6 @@ export const ItemLegend = styled.div`
 `
 
 export const ItemName = styled.h2`
-  width: 280px;
   height: 30px;
   margin: 12px 16px 0;
   font-family: 'Roboto';
@@ -83,6 +112,10 @@ export const ItemName = styled.h2`
   line-height: 30px;
   letter-spacing: 0.15px;
   color: rgba(0, 0, 0, 0.87);
+
+  /* @media screen and (min-width: 1440px) {
+    width: 240px;
+  } */
 `;
 
 export const ItemSpecie = styled.p`

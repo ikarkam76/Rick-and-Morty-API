@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { getCharacter } from 'services/getCharacters';
 import { BackLink } from 'components/backLink/BackLink';
 import { CharacterCard } from 'components/characterCard/CharacterCard';
+import { CharacterContainer } from './Character.styled';
 
 
 export const Character = () => {
@@ -16,12 +17,14 @@ export const Character = () => {
     }, [id])
 
     return (
-      <div>
-            <BackLink to={backHref}>⬅️ Go back</BackLink>
+      <CharacterContainer>
+            <BackLink to={backHref}>
+                GO BACK
+            </BackLink>
             {character === null
                 ? <div>Loading...</div>
                 : <CharacterCard character={character} />
                     }
-      </div>
+      </CharacterContainer>
     );
 }

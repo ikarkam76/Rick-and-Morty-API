@@ -10,10 +10,7 @@ export const getAllCharacters = async () => {
       items.push(i)
     }
     const {data} = await axios.get(`${API_URL}${items}`)
-    const sortCharacters = data.sort((first, second) => 
-      first.name.localeCompare(second.name)
-    )
-    return sortCharacters;
+    return data;
   } catch (error) {
     return console.error(error.message);
   }
