@@ -1,62 +1,50 @@
-import { useEffect, useState} from "react";
-import { useLocation } from "react-router-dom"
-import { getAllCharacters } from "services/getCharacters";
-import { FilterInput, HomeContainer, ItemCard, ItemImg, ItemImgContainer, ItemLegend, ItemName, ItemSpecie, ListContainer, Logo, StyledLink } from "./Home.styled";
+import { CharactersList } from "components/charactersList/charactersList";
+import { useState } from "react";
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { ButtonContainer, HomeContainer, Logo, LogInButton, UserMenuContainer, LogOutButton, UserName} from "./Home.styled";
+import axios from "axios";
 
 export const Home = () => {
-    const [characters, setCharacters] = useState([]);
-    const [filter, setFilter] = useState(localStorage.getItem('filter') || '');
-    const location = useLocation();
-    
-    useEffect(() => {
-        getAllCharacters().then(res => {
-            setCharacters(res);
-        })
-    },[])
-
-   const handleChange = event => {
-     setFilter(event.target.value);
-     localStorage.setItem('filter', event.target.value);
-   };
-
-    const filteredCharacters = characters
-        .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
-        .sort((first, second) => first.name.localeCompare(second.name));
+  const [user, setUser] = useState({})
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  const login = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      setIsLoggedIn(true);
+      const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+        { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } }
+      );
+      setUser(userInfo.data);
+    },
+    onError: errorResponse => console.log(errorResponse),
+  });
 
     return (
       <HomeContainer>
-          <Logo />
-          <FilterInput
-            type="text"
-            name="username"
-            value={filter}
-            placeholder="Filter by name..."
-            onChange={handleChange}
-          />
-        <ListContainer>
-                {!characters[1]
-                    ? <div>Loading...</div>
-                    : filteredCharacters.map(item => {
-              return (
-                <li key={item.id}>
-                  <ItemCard>
-                    <StyledLink
-                      to={`character/${item.id}`}
-                      state={{ from: location }}
-                    >
-                      <ItemImgContainer>
-                        <ItemImg src={item.image} alt="foto of character" />
-                      </ItemImgContainer>
-                      <ItemLegend>
-                        <ItemName>{item.name}</ItemName>
-                        <ItemSpecie>{item.species}</ItemSpecie>
-                      </ItemLegend>
-                    </StyledLink>
-                  </ItemCard>
-                </li>
-              );
-          })}
-        </ListContainer>
+        <Logo />
+        {!isLoggedIn ? (
+          <ButtonContainer>
+            <LogInButton onClick={() => login()}>
+              Sign in with Google 🚀{' '}
+            </LogInButton>
+          </ButtonContainer>
+        ) : (
+          <>
+            <UserMenuContainer>
+                  <UserName>Hello, {user.name}</UserName>
+              <LogOutButton
+                type="button"
+                onClick={() => {
+                  setIsLoggedIn(false);
+                  googleLogout();
+                }}
+              >
+                Sign out
+              </LogOutButton>
+            </UserMenuContainer>
+            <CharactersList user={user} />
+          </>
+        )}
       </HomeContainer>
     );
 }
