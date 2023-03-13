@@ -112,6 +112,9 @@ export const ItemName = styled.h2`
   line-height: 30px;
   letter-spacing: 0.15px;
   color: rgba(0, 0, 0, 0.87);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   /* @media screen and (min-width: 1440px) {
     width: 240px;
