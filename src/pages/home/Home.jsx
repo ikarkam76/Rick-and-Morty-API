@@ -5,7 +5,7 @@ import { FilterInput, HomeContainer, ItemCard, ItemImg, ItemImgContainer, ItemLe
 
 export const Home = () => {
     const [characters, setCharacters] = useState([]);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState(localStorage.getItem('filter') || '');
     const location = useLocation();
     
     useEffect(() => {
@@ -15,7 +15,8 @@ export const Home = () => {
     },[])
 
    const handleChange = event => {
-       setFilter(event.target.value);
+     setFilter(event.target.value);
+     localStorage.setItem('filter', event.target.value);
    };
 
     const filteredCharacters = characters
