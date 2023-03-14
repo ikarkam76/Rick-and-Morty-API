@@ -12,9 +12,6 @@ import {
   ItemLegend,
   ItemName,
   ItemSpecie,
-  UserMenuContainer,
-  UserName,
-  LogOutButton,
   FilterContainer,
   UserMenu
 } from './charactersList.styled';
@@ -40,7 +37,8 @@ export const CharactersList = ({logout}) => {
           ).then(res => setUser(res.data));
         });
       }
-    }, [token]);
+  }, [token]);
+   console.log(user);
 
     const filteredCharacters = characters
         .filter(item =>
