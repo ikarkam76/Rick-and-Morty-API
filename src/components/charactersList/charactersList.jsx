@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { googleLogout } from '@react-oauth/google';
+import axios from 'axios';
 import { getAllCharacters } from 'services/getCharacters';
 import {
   FilterInput,
@@ -15,27 +14,33 @@ import {
   ItemSpecie,
   UserMenuContainer,
   UserName,
-  LogOutButton
+  LogOutButton,
+  FilterContainer,
+  UserMenu
 } from './charactersList.styled';
-import { logoutReducer } from 'redux/authSlice';
 
-export const CharactersList = () => {
-    const user = useSelector((state) => state.auth.user)
-    const dispatch = useDispatch();
+export const CharactersList = ({logout}) => {
+    const [user, setUser] = useState({})
     const [characters, setCharacters] = useState([]);
     const location = useLocation();
-    const [filterValue, setFilterValue] = useState(localStorage.getItem('filter') || '');
+  const [filterValue, setFilterValue] = useState(localStorage.getItem('filter') || '');
+  const token = localStorage.getItem('token')
 
     const handleChange = event => {
       setFilterValue(event.target.value);
       localStorage.setItem('filter', event.target.value);
     };
 
-    useEffect(() => {
+  useEffect(() => {
+    if (token) {
         getAllCharacters().then(res => {
-        setCharacters(res);
+          setCharacters(res);
+          axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+            { headers: { Authorization: `Bearer ${token}` } }
+          ).then(res => setUser(res.data));
         });
-    }, []);
+      }
+    }, [token]);
 
     const filteredCharacters = characters
         .filter(item =>
@@ -45,26 +50,25 @@ export const CharactersList = () => {
 
     return (
       <>
-        <UserMenuContainer>
+        {/* <UserMenuContainer>
           <UserName>Hello, {user.name}!</UserName>
           <LogOutButton
             type="button"
-            onClick={() => {
-              googleLogout();
-              dispatch(logoutReducer());
-            }}
+            onClick={logout}
           >
             Sign out
           </LogOutButton>
-        </UserMenuContainer>
-
-        <FilterInput
-          type="text"
-          name="username"
-          value={filterValue}
-          placeholder="Filter by name..."
-          onChange={handleChange}
-        />
+        </UserMenuContainer> */}
+        <FilterContainer>
+          <FilterInput
+            type="text"
+            name="username"
+            value={filterValue}
+            placeholder="Filter by name..."
+            onChange={handleChange}
+          />
+          <UserMenu></UserMenu>
+        </FilterContainer>
         <ListContainer>
           {!characters[1] ? (
             <div>Loading...</div>

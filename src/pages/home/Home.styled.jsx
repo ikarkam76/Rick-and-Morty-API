@@ -28,14 +28,19 @@ export const Logo = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 40px;
   text-align: center;
 `;
 
+export const LoginTitle = styled.h2`
+  margin-bottom: 40px;
+  color: #203745;
+`;
+
 export const LogInButton = styled.button`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 200px;
+  height: 50px;
+  border-radius: 4px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;

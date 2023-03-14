@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import filterIcon from 'images/filter.svg';
+import shape from 'images/Shape.svg';
 
 export const UserMenuContainer = styled.div`
   padding: 0 30px;
@@ -20,6 +21,9 @@ export const UserName = styled.h4`
 `;
 
 export const LogOutButton = styled.button`
+  position: absolute;
+  top: 28px;
+  right: 4px;
   width: 60px;
   height: 30px;
   border-radius: 4px;
@@ -36,10 +40,28 @@ export const LogOutButton = styled.button`
     0px 2px 4px rgba(191, 222, 66, 0.2), 0px 4px 4px rgba(191, 222, 66, 0.3);
 `;
 
+export const FilterContainer = styled.div`
+  position: relative;
+  margin-top: 32px;
+`;
+
+
+export const UserMenu = styled.button`
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background-color: #fff;
+  background-image: url(${shape});
+  background-repeat: no-repeat;
+  background-position: 5px;
+`;
+
 export const FilterInput = styled.input`
   width: calc(100% - 52px);
-  height: 56px;
-  margin-top: 32px;
+  height: 52px;
   padding-left: 48px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 8px;

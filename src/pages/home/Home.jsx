@@ -1,37 +1,41 @@
 import { CharactersList } from "components/charactersList/charactersList";
-import { useSelector, useDispatch } from 'react-redux';
-import { useGoogleLogin } from '@react-oauth/google';
-import { ButtonContainer, HomeContainer, Logo, LogInButton } from "./Home.styled";
-import axios from "axios";
-import { loginReducer } from "redux/authSlice";
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
+import { ButtonContainer, HomeContainer, Logo, LogInButton, LoginTitle } from "./Home.styled";
+import { useState } from "react";
 
 
 export const Home = () => {
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isAuth') || false)
   
   const login = useGoogleLogin({
     onSuccess: async tokenResponse => {
-      const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
-        { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } }
-      );
-      dispatch(loginReducer(userInfo.data))
+      localStorage.setItem('token', tokenResponse.access_token);
+      localStorage.setItem('isAuth', true);
+      setIsLoggedIn(true);
     },
     onError: errorResponse => console.log(errorResponse),
   });
+
+  const logout = (ev) => {
+    googleLogout();
+    localStorage.removeItem('token');
+      localStorage.removeItem('isAuth');
+      setIsLoggedIn(false);
+  }
 
     return (
       <HomeContainer>
         <Logo />
         {!isLoggedIn ? (
           <ButtonContainer>
+            <LoginTitle>Welcome to this App!</LoginTitle>
             <LogInButton onClick={() => login()}>
               Sign in with Google 🚀{' '}
             </LogInButton>
           </ButtonContainer>
         ) : (
           <>
-            <CharactersList />
+            <CharactersList logout={logout} />
           </>
         )}
       </HomeContainer>
