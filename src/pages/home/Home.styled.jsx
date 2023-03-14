@@ -50,14 +50,16 @@ export const LogInButton = styled.button`
   color: #203745;
   background-color: #41b4c9;
   border: 1px solid #203745;
+  border-radius: 4px;
   box-shadow: 0px 1px 5px rgba(191, 222, 66, 0.4),
     0px 2px 4px rgba(191, 222, 66, 0.2), 0px 4px 4px rgba(191, 222, 66, 0.3);
 
   @media screen and (min-width: 1440px) {
-    width: 200px;
-    height: 200px;
+    width: 320px;
+    height: 80px;
     font-size: 24px;
     line-height: 30px;
-    letter-spacing: 0.30px;
+    letter-spacing: 0.3px;
+    border-radius: 8px;
   }
 `;
