@@ -7,10 +7,10 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <BrowserRouter basename="/Rick-and-Morty-API">
-        <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
-          <App />
-        </GoogleOAuthProvider>
-      </BrowserRouter>
+    <BrowserRouter basename="/Rick-and-Morty-API">
+      <GoogleOAuthProvider clientId="387423780881-bd8tlofscim1qa6vga6ulm1q30gauu86.apps.googleusercontent.com">
+        <App />
+      </GoogleOAuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
