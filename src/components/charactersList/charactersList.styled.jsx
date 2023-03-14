@@ -4,28 +4,30 @@ import filterIcon from 'images/filter.svg';
 import shape from 'images/Shape.svg';
 
 export const UserMenuContainer = styled.div`
-  padding: 0 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 20px;
+  top: 38px;
+  right: 4px;
+  position: absolute;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  background-color: #fff;
 `;
 
-export const UserName = styled.h4`
+export const UserName = styled.h5`
+  margin-bottom: 10px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 14px;
+  line-height: 7px;
   letter-spacing: 0.15px;
   color: #203745;
 `;
 
-export const LogOutButton = styled.button`
-  position: absolute;
-  top: 28px;
-  right: 4px;
-  width: 60px;
-  height: 30px;
+export const UserMenuButton = styled.button`
+  width: 100%;
+  height: 20px;
   border-radius: 4px;
   font-family: 'Roboto';
   font-style: normal;

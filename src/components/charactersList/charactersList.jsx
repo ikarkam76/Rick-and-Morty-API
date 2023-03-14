@@ -13,12 +13,16 @@ import {
   ItemName,
   ItemSpecie,
   FilterContainer,
-  UserMenu
+  UserMenu,
+  UserMenuContainer,
+  UserName,
+  UserMenuButton
 } from './charactersList.styled';
 
 export const CharactersList = ({logout}) => {
     const [user, setUser] = useState({})
-    const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState([]);
+  const [isMenu, setIsMenu] = useState(false);
     const location = useLocation();
   const [filterValue, setFilterValue] = useState(localStorage.getItem('filter') || '');
   const token = localStorage.getItem('token')
@@ -38,7 +42,6 @@ export const CharactersList = ({logout}) => {
         });
       }
   }, [token]);
-   console.log(user);
 
     const filteredCharacters = characters
         .filter(item =>
@@ -46,17 +49,12 @@ export const CharactersList = ({logout}) => {
         )
         .sort((first, second) => first.name.localeCompare(second.name));
 
+  const toggleMenu = () => {
+    setIsMenu(prev => !prev);
+    }
+
     return (
       <>
-        {/* <UserMenuContainer>
-          <UserName>Hello, {user.name}!</UserName>
-          <LogOutButton
-            type="button"
-            onClick={logout}
-          >
-            Sign out
-          </LogOutButton>
-        </UserMenuContainer> */}
         <FilterContainer>
           <FilterInput
             type="text"
@@ -65,7 +63,15 @@ export const CharactersList = ({logout}) => {
             placeholder="Filter by name..."
             onChange={handleChange}
           />
-          <UserMenu></UserMenu>
+          <UserMenu type="button" onClick={toggleMenu}></UserMenu>
+          {isMenu && (
+            <UserMenuContainer>
+              <UserName>Hello, {user.name}!</UserName>
+              <UserMenuButton type="button" onClick={logout}>
+                Sign out
+              </UserMenuButton>
+            </UserMenuContainer>
+          )}
         </FilterContainer>
         <ListContainer>
           {!characters[1] ? (
