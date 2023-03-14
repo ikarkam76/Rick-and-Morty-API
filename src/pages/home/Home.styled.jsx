@@ -56,37 +56,3 @@ export const LogInButton = styled.button`
     letter-spacing: 0.30px;
   }
 `;
-
-export const UserMenuContainer = styled.div`
-  padding: 0 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const UserName = styled.h4`
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
-  letter-spacing: 0.15px;
-  color: #203745;
-`;
-
-export const LogOutButton = styled.button`
-  width: 60px;
-  height: 30px;
-  border-radius: 4px;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 10px;
-  letter-spacing: 0.15px;
-  color: #203745;
-  background-color: #50d9f1;
-  border: 1px solid #203745;
-  box-shadow: 0px 1px 5px rgba(191, 222, 66, 0.4),
-    0px 2px 4px rgba(191, 222, 66, 0.2), 0px 4px 4px rgba(191, 222, 66, 0.3);
-`;

@@ -1,20 +1,21 @@
 import { CharactersList } from "components/charactersList/charactersList";
-import { useState } from "react";
-import { useGoogleLogin, googleLogout } from '@react-oauth/google';
-import { ButtonContainer, HomeContainer, Logo, LogInButton, UserMenuContainer, LogOutButton, UserName} from "./Home.styled";
+import { useSelector, useDispatch } from 'react-redux';
+import { useGoogleLogin } from '@react-oauth/google';
+import { ButtonContainer, HomeContainer, Logo, LogInButton } from "./Home.styled";
 import axios from "axios";
+import { loginReducer } from "redux/authSlice";
+
 
 export const Home = () => {
-  const [user, setUser] = useState({})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
   
   const login = useGoogleLogin({
     onSuccess: async tokenResponse => {
-      setIsLoggedIn(true);
       const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
         { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } }
       );
-      setUser(userInfo.data);
+      dispatch(loginReducer(userInfo.data))
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -30,19 +31,7 @@ export const Home = () => {
           </ButtonContainer>
         ) : (
           <>
-            <UserMenuContainer>
-                  <UserName>Hello, {user.name}</UserName>
-              <LogOutButton
-                type="button"
-                onClick={() => {
-                  setIsLoggedIn(false);
-                  googleLogout();
-                }}
-              >
-                Sign out
-              </LogOutButton>
-            </UserMenuContainer>
-            <CharactersList user={user} />
+            <CharactersList />
           </>
         )}
       </HomeContainer>

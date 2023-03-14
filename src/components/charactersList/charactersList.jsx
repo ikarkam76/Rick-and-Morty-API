@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { googleLogout } from '@react-oauth/google';
 import { getAllCharacters } from 'services/getCharacters';
 import {
   FilterInput,
@@ -11,15 +13,21 @@ import {
   ItemLegend,
   ItemName,
   ItemSpecie,
+  UserMenuContainer,
+  UserName,
+  LogOutButton
 } from './charactersList.styled';
+import { logoutReducer } from 'redux/authSlice';
 
 export const CharactersList = () => {
+    const user = useSelector((state) => state.auth.user)
+    const dispatch = useDispatch();
     const [characters, setCharacters] = useState([]);
     const location = useLocation();
-    const [filter, setFilter] = useState(localStorage.getItem('filter') || '');
+    const [filterValue, setFilterValue] = useState(localStorage.getItem('filter') || '');
 
     const handleChange = event => {
-      setFilter(event.target.value);
+      setFilterValue(event.target.value);
       localStorage.setItem('filter', event.target.value);
     };
 
@@ -31,16 +39,29 @@ export const CharactersList = () => {
 
     const filteredCharacters = characters
         .filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
+        item.name.toLowerCase().includes(filterValue.toLowerCase())
         )
         .sort((first, second) => first.name.localeCompare(second.name));
 
     return (
       <>
+        <UserMenuContainer>
+          <UserName>Hello, {user.name}!</UserName>
+          <LogOutButton
+            type="button"
+            onClick={() => {
+              googleLogout();
+              dispatch(logoutReducer());
+            }}
+          >
+            Sign out
+          </LogOutButton>
+        </UserMenuContainer>
+
         <FilterInput
           type="text"
           name="username"
-          value={filter}
+          value={filterValue}
           placeholder="Filter by name..."
           onChange={handleChange}
         />
