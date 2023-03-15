@@ -19,8 +19,9 @@ export const Home = () => {
   const logout = (ev) => {
     googleLogout();
     localStorage.removeItem('token');
-      localStorage.removeItem('isAuth');
-      setIsLoggedIn(false);
+    localStorage.removeItem('isAuth');
+    localStorage.removeItem('filter');
+    setIsLoggedIn(false);
   }
 
     return (
