@@ -28,7 +28,7 @@ export const CharactersList = ({logout}) => {
   const token = localStorage.getItem('token')
 
     const handleChange = event => {
-      setFilterValue(event.target.value);
+      setFilterValue(event.target.value.trimStart());
       localStorage.setItem('filter', event.target.value);
     };
 
